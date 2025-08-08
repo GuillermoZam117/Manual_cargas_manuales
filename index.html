@@ -103,8 +103,12 @@
       <a href="#security"><span class="icon"><span class="material-icons-outlined">lock</span></span><span class="label">Seguridad</span></a>
       <a href="#upload"><span class="icon"><span class="material-icons-outlined">upload</span></span><span class="label">Cargas</span></a>
       <a href="#validation"><span class="icon"><span class="material-icons-outlined">task_alt</span></span><span class="label">Validaciones</span></a>
+      <a href="#catalogs-wms"><span class="icon"><span class="material-icons-outlined">view_list</span></span><span class="label">Catálogos WMS</span></a>
+      <a href="#catalogs-tms"><span class="icon"><span class="material-icons-outlined">dataset</span></span><span class="label">Catálogos TMS</span></a>
+      <a href="#parameters"><span class="icon"><span class="material-icons-outlined">tune</span></span><span class="label">Parámetros</span></a>
       <a href="#integration"><span class="icon"><span class="material-icons-outlined">hub</span></span><span class="label">Integración/API</span></a>
       <a href="#admin"><span class="icon"><span class="material-icons-outlined">settings</span></span><span class="label">Administración</span></a>
+      <a href="#relations"><span class="icon"><span class="material-icons-outlined">account_tree</span></span><span class="label">Relaciones</span></a>
       <a href="#glossary"><span class="icon"><span class="material-icons-outlined">menu_book</span></span><span class="label">Glosario</span></a>
       <a href="#data-dictionary"><span class="icon"><span class="material-icons-outlined">table_view</span></span><span class="label">Diccionario de datos</span></a>
       <a href="#support"><span class="icon"><span class="material-icons-outlined">support_agent</span></span><span class="label">Soporte</span></a>
@@ -237,6 +241,13 @@
         <li>Cierre de sesión forzado al expirar la sesión o al reingresar.</li>
         <li>Política de contraseñas: longitud mínima, complejidad y caducidad.</li>
       </ul>
+      <h3>Detalles técnicos</h3>
+      <ul>
+        <li>Las contraseñas se almacenan en forma encriptada. En login se cifra el valor y se valida en backend.</li>
+        <li>Al iniciar sesión se genera un token de sesión (similar a JWT) usado en las llamadas al API.</li>
+        <li>La sesión expira por inactividad; tras expirar, se redirige a la pantalla de login.</li>
+        <li>Toda actividad sensible (altas, ediciones, bajas) queda registrada en auditoría.</li>
+      </ul>
     </section>
 
     <!-- ═══ Cargas manuales ═══ -->
@@ -303,6 +314,69 @@
         <figure class="figure-card"><img src="img/5a44c315-6371-4d21-b7a1-1460a02f706a.png" alt="Reglas de negocio"><figcaption>Reglas de negocio</figcaption></figure>
         <figure class="figure-card"><img src="img/422aa45a-a02c-450b-b68c-5aa898bc8618.png" alt="Resultados de validación"><figcaption>Resultados de validación</figcaption></figure>
       </div>
+    </section>
+
+    <!-- ═══ Catálogos WMS ═══ -->
+    <section id="catalogs-wms">
+      <h2>Catálogos WMS</h2>
+      <p>Tablas maestras editables con operaciones CRUD y validaciones de campos.</p>
+      <h3>Unidad de Medida (WMS - UoM)</h3>
+      <ul>
+        <li>Campos: Código, Descripción.</li>
+        <li>Acciones: Agregar/Editar via modal, Eliminar si no hay uso.</li>
+      </ul>
+      <h3>Pantalla principal</h3>
+      <ul>
+        <li>Selector de sistema (WMS/TMS) y catálogo.</li>
+        <li>Grid con filtros y paginación.</li>
+      </ul>
+    </section>
+
+    <!-- ═══ Catálogos TMS ═══ -->
+    <section id="catalogs-tms">
+      <h2>Catálogos TMS</h2>
+      <p>Cada catálogo incluye filtros específicos y su relación con cliente y sitio/depositario.</p>
+      <ul>
+        <li><strong>Country Code</strong>: Country Code, TMS Code, Descripción. Operaciones CRUD por modal.</li>
+        <li><strong>Document Type</strong>: Document Code, Descripción.</li>
+        <li><strong>Unit Measure</strong>: filtros Cliente y Site Depositor; campos Operation Number, Customer Code, Company Code, Unit Code, Peso, Volumen, Moneda.</li>
+        <li><strong>Status Code (por tipo)</strong>: asociados con Cliente + Sitio + Interfaz.</li>
+      </ul>
+    </section>
+
+    <!-- ═══ Parámetros ═══ -->
+    <section id="parameters">
+      <h2>Parámetros</h2>
+      <p>Configuraciones personalizadas gestionadas a 3 niveles con modales uniformes.</p>
+      <h3>Global (SMTP / Correo)</h3>
+      <ul>
+        <li>Tipo: Correo. Parámetros: SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, etc.</li>
+        <li>Todos editables mediante modal.</li>
+      </ul>
+      <h3>Por Cliente</h3>
+      <ul>
+        <li>Selector Tipo = Cliente + Filtro de Cliente.</li>
+        <li>Acción: “Actualizar parámetros predeterminados” si están vacíos.</li>
+      </ul>
+      <h3>Por Interfaz (Cliente + Sitio + Interfaz)</h3>
+      <ul>
+        <li>Selectores dependientes; muestra parámetros técnicos (rutas, flags de correo, listas de distribución).</li>
+      </ul>
+      <h3>Modal de edición</h3>
+      <ul>
+        <li>Nombre de parámetro (solo lectura) y campo de valor.</li>
+        <li>Actualiza mediante procedimiento almacenado.</li>
+      </ul>
+    </section>
+
+    <!-- ═══ Relaciones entre pantallas ═══ -->
+    <section id="relations">
+      <h2>Relaciones entre pantallas</h2>
+      <ul>
+        <li>Catálogos TMS/WMS dependen del sistema seleccionado en la vista principal.</li>
+        <li>Parámetros Cliente/Interfaz requieren selección previa de cliente (y sitio/interfaz respectivamente).</li>
+        <li>La edición de filas se realiza con modales estandarizados en todas las tablas (validación y paginación).</li>
+      </ul>
     </section>
 
     <!-- ═══ Integración / API ═══ -->
