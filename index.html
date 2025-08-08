@@ -103,6 +103,7 @@
       <a href="#security"><span class="icon"><span class="material-icons-outlined">lock</span></span><span class="label">Seguridad</span></a>
       <a href="#upload"><span class="icon"><span class="material-icons-outlined">upload</span></span><span class="label">Cargas</span></a>
       <a href="#validation"><span class="icon"><span class="material-icons-outlined">task_alt</span></span><span class="label">Validaciones</span></a>
+      <a href="#catalogs-global"><span class="icon"><span class="material-icons-outlined">list_alt</span></span><span class="label">Catálogos Globales</span></a>
       <a href="#catalogs-wms"><span class="icon"><span class="material-icons-outlined">view_list</span></span><span class="label">Catálogos WMS</span></a>
       <a href="#catalogs-tms"><span class="icon"><span class="material-icons-outlined">dataset</span></span><span class="label">Catálogos TMS</span></a>
       <a href="#parameters"><span class="icon"><span class="material-icons-outlined">tune</span></span><span class="label">Parámetros</span></a>
@@ -417,6 +418,54 @@
         <figure class="figure-card"><img src="img/5a44c315-6371-4d21-b7a1-1460a02f706a.png" alt="Reglas de negocio"><figcaption>Reglas de negocio</figcaption></figure>
         <figure class="figure-card"><img src="img/422aa45a-a02c-450b-b68c-5aa898bc8618.png" alt="Resultados de validación"><figcaption>Resultados de validación</figcaption></figure>
       </div>
+    </section>
+
+    <!-- ═══ Catálogos WMS ═══ -->
+    <section id="catalogs-global">
+      <h2>Catálogos Globales</h2>
+      <p>Administra listas maestras compartidas por todo el sistema (ej. Sites, Depositors). Desde esta vista puedes consultar, crear, editar y eliminar registros; cualquier cambio impacta en configuraciones asociadas.</p>
+      <h3>Acceso</h3>
+      <ol>
+        <li>Inicia sesión.</li>
+        <li>En el menú lateral selecciona <strong>Catálogos</strong>.</li>
+        <li>En la parte superior elige la sección <strong>Globales</strong>.</li>
+      </ol>
+      <h3>Pantalla principal</h3>
+      <ul>
+        <li><strong>Menú de navegación</strong>: cambia entre catálogos y secciones (Globales, WMS/TMS).</li>
+        <li><strong>Agregar a catálogo</strong>: crea un nuevo registro.</li>
+        <li><strong>Tabla</strong>: Código (único), Descripción y Acciones (Editar/Borrar).</li>
+      </ul>
+      <div class="grid grid-cols-3">
+        <figure class="figure-card"><img src="img/catalogos globales.png" alt="Catálogos globales"><figcaption>Vista de catálogos globales</figcaption></figure>
+        <figure class="figure-card"><img src="img/selector de catalogo global.png" alt="Selector de catálogo global"><figcaption>Selector de catálogo</figcaption></figure>
+        <figure class="figure-card"><img src="img/agregar catalogo global.png" alt="Agregar a catálogo global"><figcaption>Agregar a catálogo</figcaption></figure>
+        <figure class="figure-card"><img src="img/editar catalogo global.png" alt="Editar registro global"><figcaption>Editar registro</figcaption></figure>
+        <figure class="figure-card"><img src="img/eliminar catalogo global.png" alt="Eliminar registro global"><figcaption>Eliminar registro</figcaption></figure>
+      </div>
+      <h3>Crear un nuevo registro</h3>
+      <ol>
+        <li>Pulsa <strong>Agregar a catálogo</strong>.</li>
+        <li>Ingresa <strong>Código</strong> (único) y <strong>Descripción</strong> (obligatoria).</li>
+        <li>Pulsa <strong>Guardar</strong> para confirmar o <strong>Cancelar</strong> para descartar.</li>
+      </ol>
+      <h3>Editar un registro</h3>
+      <ol>
+        <li>Localiza el registro en la tabla y pulsa <strong>Editar</strong>.</li>
+        <li>Modifica Código o Descripción y pulsa <strong>Guardar</strong>.</li>
+      </ol>
+      <h3>Eliminar un registro</h3>
+      <ol>
+        <li>En la fila del registro, pulsa <strong>Borrar</strong>.</li>
+        <li>Confirma <strong>Eliminar</strong> o <strong>Cancelar</strong>.</li>
+      </ol>
+      <div class="callout"><strong>Importante:</strong> al eliminar un registro, las configuraciones que lo usan quedan sin referencia. Verifica su uso antes de borrarlo.</div>
+      <h3>Buenas prácticas</h3>
+      <ul>
+        <li>Usa códigos claros y consistentes.</li>
+        <li>Evita eliminar registros en uso por clientes o interfaces.</li>
+        <li>Mantén descripciones actualizadas para facilitar la identificación.</li>
+      </ul>
     </section>
 
     <!-- ═══ Catálogos WMS ═══ -->
