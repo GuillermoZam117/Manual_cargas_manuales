@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Manual de Usuario · Guías Estándar y Cargas Manuales</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 🎨  Hojas de estilo corporativas (Material‑Theme + overrides) -->
+  <link rel="stylesheet" href="css/portal-theme.css" />
+  <link rel="stylesheet" href="css/project-overrides.css" />
+  <link rel="stylesheet" href="css/project-styles.css" />
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet" />
+
+  <style>
+    :root{
+      --ryder-red:#c8102e;           /* rojo corporativo */
+      --sidebar-w:260px;             /* ancho menú */
+      --header-h:60px;               /* alto topbar */
+      --bg:#f4f5f7;                 /* gris fondo */
+      --radius:6px;                 /* radios generales */
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Roboto,Arial,Helvetica,sans-serif;background:var(--bg);color:#111;line-height:1.46}
+    img{max-width:100%;display:block;border-radius:var(--radius)}
+    a{color:inherit;text-decoration:none}
+
+    /* ═════════ TOPBAR ═════════ */
+    header.topbar{position:fixed;inset:0 0 auto 0;height:var(--header-h);display:flex;align-items:center;padding:0 1rem;background:#fff;box-shadow:0 2px 4px #0001;z-index:200}
+    .hamburger{border:none;background:none;cursor:pointer;color:#000;padding:.25rem;display:inline-flex;align-items:center}
+    .hamburger .material-icons{font-size:28px}
+    .brand{display:flex;align-items:center;margin-left:.5rem}
+    .brand img{height:36px}
+    .search-box{flex:0 0 340px;margin-left:auto}
+    .search-box input{width:100%;padding:.5rem .9rem;font-size:.9rem;border:1px solid #d1d5db;border-radius:4px}
+
+    /* ═════════ SIDEBAR ═════════ */
+    aside.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--ryder-red);color:#fff;overflow-y:auto;transition:width .25s}
+    aside.sidebar.collapsed{width:60px}
+    .side-title{font-size:1.05rem;font-weight:600;padding:1.1rem .9rem 1rem}
+    nav.side-links{display:flex;flex-direction:column}
+    nav.side-links a{display:flex;align-items:center;gap:.75rem;padding:.65rem .95rem;border-left:3px solid transparent;font-size:.87rem;white-space:nowrap;transition:background .15s,border-color .15s}
+    nav.side-links a:hover{background:#ffffff22}
+    nav.side-links a.active{background:#ffffff33;border-color:#fff;font-weight:600}
+    .icon{display:inline-flex;min-width:24px;justify-content:center}
+    .icon .material-icons-outlined{font-size:20px;color:#fff}
+    aside.sidebar.collapsed span.label{display:none}
+
+    /* ═════════ CONTENIDO ═════════ */
+    main{margin-left:var(--sidebar-w);padding:calc(var(--header-h)+1.8rem) 1.6rem 2.6rem;transition:margin-left .25s}
+    aside.sidebar.collapsed+main{margin-left:60px}
+    main h2{margin:2rem 0 1rem;font-size:1.75rem;color:var(--ryder-red)}
+    main h3{margin:1.5rem 0 .75rem;font-size:1.25rem;color:#374151}
+
+    /* ♥ utilidades */
+    .grid{display:grid;gap:1rem}
+    .grid-cols-3{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+    .grid-cols-2{grid-template-columns:repeat(auto-fill,minmax(420px,1fr))}
+    .figure-card{background:#fff;border:1px solid #e1e4e8;border-radius:var(--radius);box-shadow:0 1px 3px #0002;overflow:hidden}
+    .figure-card img{cursor:zoom-in}
+    .figure-card figcaption{background:#f3f4f6;padding:.35rem .5rem;font-size:.78rem;text-align:center}
+    table{width:100%;border-collapse:collapse;background:#fff;margin-top:1rem}
+    th,td{border:1px solid #d1d5db;padding:.5rem;font-size:.8rem;text-align:left}
+    thead{background:#e5e7eb;font-weight:600}
+    ol{margin-left:1.25rem}
+    .callout{background:#fff3cd;border-left:4px solid #f59e0b;padding:.75rem 1rem;margin:.75rem 0;border-radius:4px}
+
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:999;padding:2rem}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:90vw;max-height:85vh;border-radius:8px;box-shadow:0 10px 30px #0007}
+    .lightbox .caption{color:#fff;text-align:center;margin-top:.75rem;max-width:90vw}
+  </style>
+</head>
+<body>
+  <!-- ░░░ TOPBAR ░░░ -->
+  <header class="topbar">
+    <button class="hamburger" id="btnHamburger" aria-label="Plegar menú"><span class="material-icons">menu</span></button>
+    <div class="brand"><img src="img/RyderLogo.svg" alt="Ryder"></div>
+    <div class="search-box"><input type="search" id="searchInput" placeholder="Buscar en el manual…"></div>
+  </header>
+
+  <!-- ░░░ SIDEBAR ░░░ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="side-title">Manual de Usuario</div>
+    <nav class="side-links" id="navLinks">
+      <a href="#overview"><span class="icon"><span class="material-icons-outlined">home</span></span><span class="label">Visión General</span></a>
+      <a href="#getting-started" class="active"><span class="icon"><span class="material-icons-outlined">rocket_launch</span></span><span class="label">Primeros Pasos</span></a>
+      <a href="#architecture"><span class="icon"><span class="material-icons-outlined">account_tree</span></span><span class="label">Arquitectura</span></a>
+      <a href="#clients"><span class="icon"><span class="material-icons-outlined">people</span></span><span class="label">Clientes</span></a>
+      <a href="#users"><span class="icon"><span class="material-icons-outlined">badge</span></span><span class="label">Usuarios</span></a>
+      <a href="#roles"><span class="icon"><span class="material-icons-outlined">admin_panel_settings</span></span><span class="label">Roles</span></a>
+      <a href="#account"><span class="icon"><span class="material-icons-outlined">person</span></span><span class="label">Cuenta</span></a>
+      <a href="#security"><span class="icon"><span class="material-icons-outlined">lock</span></span><span class="label">Seguridad</span></a>
+      <a href="#upload"><span class="icon"><span class="material-icons-outlined">upload</span></span><span class="label">Cargas</span></a>
+      <a href="#validation"><span class="icon"><span class="material-icons-outlined">task_alt</span></span><span class="label">Validaciones</span></a>
+      <a href="#integration"><span class="icon"><span class="material-icons-outlined">hub</span></span><span class="label">Integración/API</span></a>
+      <a href="#admin"><span class="icon"><span class="material-icons-outlined">settings</span></span><span class="label">Administración</span></a>
+      <a href="#troubleshooting"><span class="icon"><span class="material-icons-outlined">bug_report</span></span><span class="label">Solución de problemas</span></a>
+      <a href="#faq"><span class="icon"><span class="material-icons-outlined">help</span></span><span class="label">FAQ</span></a>
+    </nav>
+  </aside>
+
+  <main>
+    <!-- ═══ Visión general ═══ -->
+    <section id="overview">
+      <h2>Visión General</h2>
+      <p>Portal unificado que combina los módulos <em>Guías Estándar</em> y <em>Cargas Manuales</em> sobre .NET 8. Navega por el menú lateral (plegable) para acceder a cada apartado.</p>
+      <h3>Menú lateral plegable</h3>
+      <p>El menú lateral puede <strong>plegarse</strong> para ganar espacio o <strong>desplegarse</strong> para navegar por secciones.</p>
+      <div class="grid grid-cols-2">
+        <figure class="figure-card"><img src="img/menu-expanded.png" alt="Menú lateral desplegado"><figcaption>Menú desplegado con todas las secciones visibles</figcaption></figure>
+        <figure class="figure-card"><img src="img/menu-collapsed.png" alt="Menú lateral plegado"><figcaption>Menú plegado para maximizar el área de trabajo</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ═══ Primeros Pasos ═══ -->
+    <section id="getting-started">
+      <h2>Primeros Pasos</h2>
+      <div class="callout"><strong>Requisitos:</strong> tener usuario activo, archivos de carga con la plantilla vigente y permisos según rol.</div>
+      <ol>
+        <li>Visita <code>https://www.arensodev.com.mx:8601</code>.</li>
+        <li>Inicia sesión con tus credenciales.</li>
+        <li>Selecciona el módulo <strong>Guías Estándar</strong> o <strong>Cargas Manuales</strong> según tu tarea.</li>
+      </ol>
+      <p>Tras autenticarte, selecciona el módulo que necesitas para trabajar.</p>
+      <div class="grid grid-cols-3">
+        <figure class="figure-card"><img src="img/home.png" alt="Pantalla de bienvenida después de iniciar sesión"><figcaption>Bienvenida con accesos a módulos</figcaption></figure>
+        <figure class="figure-card"><img src="img/login.png" alt="Pantalla de login con usuario y contraseña"><figcaption>Inicio de sesión seguro</figcaption></figure>
+        <figure class="figure-card"><img src="img/menu-guias.png" alt="Pantalla de selección de módulos"><figcaption>Selecciona Guías o Cargas Manuales</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ═══ Arquitectura ═══ -->
+    <section id="architecture">
+      <h2>Arquitectura</h2>
+      <table>
+        <thead><tr><th>Capa</th><th>Responsabilidad</th><th>Tecnologías</th></tr></thead>
+        <tbody>
+          <tr><td>UI (SPA)</td><td>Interfaz responsiva</td><td>Angular 17 · Material 17</td></tr>
+          <tr><td>API Gateway</td><td>Seguridad & routing</td><td>.NET 8 Web API · JWT</td></tr>
+          <tr><td>Servicios</td><td>Lógica de negocio</td><td>Microservicios .NET 8 · MediatR / CQRS</td></tr>
+          <tr><td>Integración</td><td>EDI / WS</td><td>RabbitMQ · Azure Functions</td></tr>
+          <tr><td>Data</td><td>Persistencia</td><td>SQL Server 2022 · EF Core 8</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ═══ Clientes ═══ -->
+    <section id="clients">
+      <h2>Clientes</h2>
+      <p>Catálogo con búsqueda, alta, edición, asignación de interfaces y baja lógica.</p>
+      <h3>Flujo</h3>
+      <ol>
+        <li>Crear cliente: completa datos mínimos obligatorios.</li>
+        <li>Asignar interfaces: vincula las interfaces válidas para el cliente.</li>
+        <li>Editar datos: puedes actualizar razón social, contacto, etc.</li>
+        <li>Baja lógica: desactiva al cliente manteniendo su histórico.</li>
+      </ol>
+      <p>Desde aquí gestionas la información maestra de clientes y sus interfaces.</p>
+      <div class="grid grid-cols-3">
+        <figure class="figure-card"><img src="img/5599a85d-7a35-45f4-9ad8-65848709fb75.png" alt="Lista de clientes"><figcaption>Página principal</figcaption></figure>
+        <figure class="figure-card"><img src="img/46560acb-3a63-4025-8f6f-5a6e0236fb81.png" alt="Formulario para dar de alta un cliente"><figcaption>Alta de cliente</figcaption></figure>
+        <figure class="figure-card"><img src="img/c8fd3eaa-e8e5-4026-9fd3-7311f6481c86.png" alt="Edición de datos del cliente"><figcaption>Edición de cliente</figcaption></figure>
+        <figure class="figure-card"><img src="img/de87ae7b-0705-4463-9b8c-49aeb13c871b.png" alt="Borrar cliente"><figcaption>Baja de cliente</figcaption></figure>
+        <figure class="figure-card"><img src="img/df2175d5-c82e-44d2-90b4-5cae72170b5e.png" alt="Asignar interfaces"><figcaption>Asignar interfaces</figcaption></figure>
+        <figure class="figure-card"><img src="img/c76ec68b-9000-471a-b91a-6d7b123166cd.png" alt="Interfaces configuradas"><figcaption>Interfaces configuradas</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ═══ Usuarios ═══ -->
+    <section id="users">
+      <h2>Usuarios</h2>
+      <p>Alta, edición y baja de cuentas.</p>
+      <h3>Flujo</h3>
+      <ol>
+        <li>Crear: define nombre, correo y rol (Administrador, Operador, Consulta).</li>
+        <li>Editar: restablece contraseña o cambia rol.</li>
+        <li>Desactivar: baja lógica de la cuenta sin borrar histórico.</li>
+      </ol>
+      <p>Controla el ciclo de vida de cuentas internas y sus privilegios.</p>
+      <div class="grid grid-cols-3">
+        <figure class="figure-card"><img src="img/bdcedbb3-76da-4b0f-a40b-c3ba914c027a.png" alt="Lista de usuarios"><figcaption>Página principal</figcaption></figure>
+        <figure class="figure-card"><img src="img/422aa45a-a02c-450b-b68c-5aa898bc8618.png" alt="Formulario para crear un nuevo usuario"><figcaption>Nuevo usuario</figcaption></figure>
+        <figure class="figure-card"><img src="img/a4bc429b-c546-4499-9b99-523c36f2b06d.png" alt="Edición del perfil de un usuario"><figcaption>Editar usuario</figcaption></figure>
+        <figure class="figure-card"><img src="img/5e140031-e503-4013-afc8-a88db77bee60.png" alt="Baja usuario"><figcaption>Baja de usuario</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ═══ Roles y permisos ═══ -->
+    <section id="roles">
+      <h2>Roles y Permisos</h2>
+      <table>
+        <thead><tr><th>Rol</th><th>Descripción</th><th>Permisos clave</th></tr></thead>
+        <tbody>
+          <tr><td>Administrador</td><td>Configura el sistema y gestiona usuarios.</td><td>CRUD usuarios, parámetros, interfaces, cargas.</td></tr>
+          <tr><td>Operador</td><td>Ejecuta procesos diarios.</td><td>Subir archivos, validar, consultar resultados.</td></tr>
+          <tr><td>Consulta</td><td>Visualiza información.</td><td>Reportes y seguimiento, sin cambios.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ═══ Cuenta de usuario ═══ -->
+    <section id="account">
+      <h2>Cuenta de Usuario</h2>
+      <div class="callout"><strong>Tip:</strong> mantén tus datos actualizados y cambia tu contraseña cada 90 días.</div>
+      <div class="grid grid-cols-3">
+        <figure class="figure-card"><img src="img/87dcda71-6eba-4aa5-afb8-f266073ec4e2.png" alt="Perfil de usuario"><figcaption>Perfil de usuario</figcaption></figure>
+        <figure class="figure-card"><img src="img/78d32921-3730-4e3c-8827-d1a2ed3dedef.png" alt="Preferencias"><figcaption>Preferencias</figcaption></figure>
+        <figure class="figure-card"><img src="img/665cf9c0-f354-4ad7-a352-1230b83f4fa5.png" alt="Cambio de contraseña"><figcaption>Cambio de contraseña</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ═══ Seguridad y sesión ═══ -->
+    <section id="security">
+      <h2>Seguridad y Sesión</h2>
+      <ul>
+        <li>Autenticación con cifrado de contraseña y token de sesión.</li>
+        <li>Cierre de sesión forzado al expirar la sesión o al reingresar.</li>
+        <li>Política de contraseñas: longitud mínima, complejidad y caducidad.</li>
+      </ul>
+    </section>
+
+    <!-- ═══ Cargas manuales ═══ -->
+    <section id="upload">
+      <h2>Cargas Manuales</h2>
+      <p>Sube archivos en formato CSV/Excel. El sistema valida estructura y datos antes de procesar.</p>
+      <h3>Prerrequisitos</h3>
+      <ul>
+        <li>Plantilla oficial (columnas y tipos correctos).</li>
+        <li>Archivo sin hojas ocultas ni celdas combinadas (para XLSX).</li>
+        <li>Codificación UTF‑8 (para CSV) y separador coma.</li>
+      </ul>
+      <h3>Flujo</h3>
+      <ol>
+        <li>Selecciona archivo.</li>
+        <li>Vista previa: corrige filas marcadas con error.</li>
+        <li>Confirmación: el sistema procesa y muestra resumen.</li>
+      </ol>
+      <h3>Validaciones clave</h3>
+      <ul>
+        <li>Campos obligatorios no vacíos y tipos correctos.</li>
+        <li>Referenciales: cliente/usuario/ interfaz existentes y activos.</li>
+        <li>Reglas de negocio: rangos, formatos, duplicados.</li>
+      </ul>
+      <div class="grid grid-cols-3">
+        <figure class="figure-card"><img src="img/76a847c1-2470-4432-9593-994e509a3c03.png" alt="Selección de archivo"><figcaption>Selección de archivo</figcaption></figure>
+        <figure class="figure-card"><img src="img/9a3007e3-7894-4631-af25-25926497a953.png" alt="Validación previa"><figcaption>Validación previa</figcaption></figure>
+        <figure class="figure-card"><img src="img/e8e9d42c-1028-4618-a78f-839ae3aaf9c1.png" alt="Resumen de carga"><figcaption>Resumen de carga</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ═══ Validaciones ═══ -->
+    <section id="validation">
+      <h2>Validaciones</h2>
+      <p>Se aplican reglas de negocio y validaciones de formato para evitar inconsistencias.</p>
+      <h3>Estados de registro</h3>
+      <table>
+        <thead><tr><th>Estado</th><th>Descripción</th><th>Acción sugerida</th></tr></thead>
+        <tbody>
+          <tr><td>Pendiente</td><td>En cola de validación o proceso.</td><td>Espera.</td></tr>
+          <tr><td>Con errores</td><td>No cumple estructura o reglas.</td><td>Corrige y reintenta.</td></tr>
+          <tr><td>Procesado</td><td>Cargado correctamente.</td><td>Ninguna.</td></tr>
+        </tbody>
+      </table>
+      <div class="grid grid-cols-3">
+        <figure class="figure-card"><img src="img/df6571da-6951-478f-8708-85ab96caf9d8.png" alt="Errores de estructura"><figcaption>Errores de estructura</figcaption></figure>
+        <figure class="figure-card"><img src="img/5a44c315-6371-4d21-b7a1-1460a02f706a.png" alt="Reglas de negocio"><figcaption>Reglas de negocio</figcaption></figure>
+        <figure class="figure-card"><img src="img/422aa45a-a02c-450b-b68c-5aa898bc8618.png" alt="Resultados de validación"><figcaption>Resultados de validación</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ═══ Integración / API ═══ -->
+    <section id="integration">
+      <h2>Integración / API</h2>
+      <p>El sistema se integra con servicios .NET 8 mediante un API REST.</p>
+      <table>
+        <thead><tr><th>Concepto</th><th>Detalle</th></tr></thead>
+        <tbody>
+          <tr><td>Base URL</td><td><code>https://www.arensodev.com.mx:8600/api</code></td></tr>
+          <tr><td>Autenticación</td><td>Token de sesión después de login.</td></tr>
+          <tr><td>Errores</td><td>Devuelven códigos HTTP y mensajes claros.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ═══ Administración ═══ -->
+    <section id="admin">
+      <h2>Administración</h2>
+      <p>Configuración del sistema, interfaces, y parámetros globales.</p>
+      <h3>Parámetros recomendados</h3>
+      <ul>
+        <li>Tamaño máximo de archivo y tipos permitidos.</li>
+        <li>Horarios de ventana de procesamiento.</li>
+        <li>Política de contraseñas y caducidad.</li>
+      </ul>
+      <div class="grid grid-cols-3">
+        <figure class="figure-card"><img src="img/c76ec68b-9000-471a-b91a-6d7b123166cd.png" alt="Parámetros"><figcaption>Parámetros</figcaption></figure>
+        <figure class="figure-card"><img src="img/df2175d5-c82e-44d2-90b4-5cae72170b5e.png" alt="Interfaces"><figcaption>Interfaces</figcaption></figure>
+        <figure class="figure-card"><img src="img/de87ae7b-0705-4463-9b8c-49aeb13c871b.png" alt="Seguridad"><figcaption>Seguridad</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ═══ Solución de problemas ═══ -->
+    <section id="troubleshooting">
+      <h2>Solución de Problemas</h2>
+      <h3>Errores frecuentes</h3>
+      <ul>
+        <li>Archivo rechazado: revisa estructura, tipos y duplicados.</li>
+        <li>Sin permisos: solicita el rol adecuado al administrador.</li>
+        <li>Sesión expirada: vuelve a iniciar sesión.</li>
+      </ul>
+      <h3>Buenas prácticas</h3>
+      <ul>
+        <li>Valida el archivo con la plantilla antes de subirlo.</li>
+        <li>Sube lotes pequeños para detectar errores más rápido.</li>
+        <li>Guarda evidencias (capturas) para soporte.</li>
+      </ul>
+    </section>
+
+    <!-- ═══ FAQ ═══ -->
+    <section id="faq">
+      <h2>FAQ</h2>
+      <h3>¿Qué formatos acepta la carga?</h3>
+      <p>CSV y XLSX. Descarga la plantilla desde el módulo de Cargas Manuales.</p>
+      <h3>¿Cómo recupero mi contraseña?</h3>
+      <p>Desde la pantalla de login, usa la opción «¿Olvidaste tu contraseña?».</p>
+      <h3>¿Con quién reporto un error?</h3>
+      <p>Abre un ticket al área de soporte indicando pasos, pantallas y capturas.</p>
+    </section>
+
+  </main>
+
+  <script>
+    (function(){
+      const sidebar = document.getElementById('sidebar');
+      const btnHamburger = document.getElementById('btnHamburger');
+      const nav = document.getElementById('navLinks');
+      const searchInput = document.getElementById('searchInput');
+      const links = Array.from(nav.querySelectorAll('a'));
+      const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+      // Lightbox simple para ampliar imágenes
+      const lb = document.createElement('div');
+      lb.className = 'lightbox';
+      lb.innerHTML = '<div class="inner"><img alt=""/><div class="caption"></div></div>';
+      document.body.appendChild(lb);
+      const lbImg = lb.querySelector('img');
+      const lbCap = lb.querySelector('.caption');
+      function openLightbox(src, caption){
+        lbImg.src = src; lbImg.alt = caption || '';
+        lbCap.textContent = caption || '';
+        lb.classList.add('open');
+      }
+      function closeLightbox(){ lb.classList.remove('open'); lbImg.src=''; lbCap.textContent=''; }
+      lb.addEventListener('click', (e)=>{ if(e.target===lb) closeLightbox(); });
+      document.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && lb.classList.contains('open')) closeLightbox(); });
+      document.querySelectorAll('.figure-card img').forEach(img=>{
+        img.addEventListener('click',()=> openLightbox(img.src, img.alt));
+      });
+
+      btnHamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+      });
+
+      // Click en enlaces: activar manualmente
+      nav.addEventListener('click', (e) => {
+        const anchor = e.target.closest('a');
+        if(!anchor) return;
+        links.forEach(l => l.classList.remove('active'));
+        anchor.classList.add('active');
+      });
+
+      // Observador para resaltar sección activa al hacer scroll
+      const observer = new IntersectionObserver((entries)=>{
+        const visible = entries
+          .filter(en => en.isIntersecting)
+          .sort((a,b)=> b.intersectionRatio - a.intersectionRatio)[0];
+        if(!visible) return;
+        const id = '#' + visible.target.id;
+        const current = links.find(l => l.getAttribute('href') === id);
+        if(current){
+          links.forEach(l => l.classList.remove('active'));
+          current.classList.add('active');
+        }
+      }, { rootMargin: '-40% 0px -55% 0px', threshold: [0, .25, .5, .75, 1] });
+
+      sections.forEach(sec => observer.observe(sec));
+
+      // Búsqueda simple: filtra enlaces y muestra/oculta secciones
+      function normalize(t){return (t||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');}
+      searchInput.addEventListener('input', ()=>{
+        const q = normalize(searchInput.value.trim());
+        let firstMatchLink = null;
+        links.forEach((a,i)=>{
+          const text = normalize(a.innerText);
+          const sec = sections[i];
+          const match = !q || text.includes(q) || normalize(sec.innerText).includes(q);
+          a.style.display = match ? '' : 'none';
+          sec.style.display = match ? '' : 'none';
+          if(match && !firstMatchLink) firstMatchLink = a;
+        });
+        if(firstMatchLink){
+          firstMatchLink.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
