@@ -19,6 +19,8 @@
       --header-h:60px;               /* alto topbar */
       --bg:#f4f5f7;                 /* gris fondo */
       --radius:6px;                 /* radios generales */
+      --content-w:1200px;            /* ancho máximo de contenido */
+      --content-pad:28px;            /* sangría segura lateral */
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -52,10 +54,12 @@
     aside.sidebar.collapsed .side-title{display:none}
 
     /* ═════════ CONTENIDO ═════════ */
-    main{margin-left:var(--sidebar-w);padding:calc(var(--header-h)+1.8rem) 1.6rem 2.6rem 2.2rem;transition:margin-left .25s}
+    main{margin-left:var(--sidebar-w);padding:calc(var(--header-h)+1.8rem) 1.6rem 2.6rem 3rem;transition:margin-left .25s}
     aside.sidebar.collapsed+main{margin-left:60px}
     main h2{margin:2rem 0 1rem;font-size:1.75rem;color:var(--ryder-red)}
     main h3{margin:1.5rem 0 .75rem;font-size:1.25rem;color:#374151}
+    /* ancho seguro y centrado por sección */
+    main>section{max-width:var(--content-w);margin-left:auto;margin-right:auto;padding-left:var(--content-pad);padding-right:var(--content-pad)}
 
     /* ♥ utilidades */
     .grid{display:grid;gap:1rem}
