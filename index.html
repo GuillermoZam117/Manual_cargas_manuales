@@ -165,18 +165,77 @@
     <!-- ═══ Clientes ═══ -->
     <section id="clients">
       <h2>Clientes</h2>
-      <p>Catálogo con búsqueda, alta, edición, asignación de interfaces y baja lógica.</p>
-      <h3>Objetivo</h3>
-      <p>Administrar el maestro de clientes asegurando consistencia de datos para su uso en interfaces y procesos de carga.</p>
-      <h3>Flujo</h3>
+      <p>El módulo de Clientes permite registrar, modificar y administrar la información de los clientes que operan en el sistema, así como gestionar las interfaces que cada cliente tiene habilitadas para integrarse con WMS o TMS. También es posible dar de baja a un cliente cuando ya no se requiere su operación.</p>
+
+      <h3>Acceso al módulo</h3>
       <ol>
-        <li><strong>Crear cliente</strong>: registra razón social, RFC, contactos y estatus. Verifica duplicados por RFC.</li>
-        <li><strong>Asignar interfaces</strong>: relaciona las interfaces habilitadas (EDI/WS) y parámetros por cliente.</li>
-        <li><strong>Editar datos</strong>: actualiza información operativa (direcciones, SLA, contacto).</li>
-        <li><strong>Baja lógica</strong>: desactiva al cliente para bloquear nuevas cargas sin perder histórico.</li>
+        <li>Inicia sesión en el sistema.</li>
+        <li>Desde el menú principal, selecciona <strong>Administración → Clientes</strong>.</li>
+        <li>Se abrirá la pantalla principal con el listado de clientes y estadísticas generales.</li>
       </ol>
-      <div class="callout"><strong>Buenas prácticas:</strong> valida RFC y contactos antes de crear; documenta cambios relevantes en el campo notas.</div>
-      <p>Desde aquí gestionas la información maestra de clientes y sus interfaces.</p>
+
+      <h3>Pantalla principal – Lista de clientes</h3>
+      <ul>
+        <li><strong>Indicadores</strong>: Total de clientes, Activos, y en Baja.</li>
+        <li><strong>Filtro</strong>: cuadro de búsqueda para localizar rápidamente un cliente.</li>
+        <li><strong>Botón “+ Nuevo”</strong>: registra un nuevo cliente.</li>
+      </ul>
+      <p>La tabla de clientes muestra: Cliente, Site, Depositor, Sistema que integra (Web Services / Standard Guides), Estado (Activo / Baja), Última Modificación y Acciones.</p>
+      <ul>
+        <li><strong>Editar</strong>: abre el formulario para modificar los datos del cliente.</li>
+        <li><strong>Interfaces</strong>: administra las interfaces asignadas al cliente.</li>
+        <li><strong>Borrar</strong>: da de baja al cliente (baja lógica).</li>
+      </ul>
+
+      <h3>Crear un nuevo cliente</h3>
+      <ol>
+        <li>Pulsa <strong>+ Nuevo</strong> en la parte superior derecha.</li>
+        <li>Completa los campos obligatorios (marcados con *):
+          <ul>
+            <li>Communication Method (p.ej., Web Services)</li>
+            <li>División</li>
+            <li>Nombre</li>
+            <li>Número (identificador único)</li>
+            <li>Usuario</li>
+            <li>Contraseña (inicial)</li>
+            <li>Nivel de seguridad (LOW, MEDIUM, HIGH)</li>
+          </ul>
+        </li>
+        <li>Campos opcionales: Teléfono, Lista de distribución (correo).</li>
+        <li>Pulsa <strong>Guardar Cliente</strong> para confirmar o <strong>Cancelar</strong> para salir sin guardar.</li>
+      </ol>
+      <p><strong>Reglas:</strong> el Número/Usuario deben ser únicos; la contraseña debe cumplir complejidad; el sistema mostrará confirmación de éxito.</p>
+
+      <h3>Editar un cliente existente</h3>
+      <ol>
+        <li>En la tabla, ubica el cliente y pulsa <strong>Editar</strong>.</li>
+        <li>Modifica los campos necesarios y pulsa <strong>Guardar Cliente</strong>.</li>
+      </ol>
+      <div class="callout"><strong>Nota:</strong> cambiar la contraseña aquí sobrescribe la actual del cliente.</div>
+
+      <h3>Dar de baja a un cliente</h3>
+      <ol>
+        <li>Localiza el cliente en la lista.</li>
+        <li>Pulsa <strong>Borrar</strong> y confirma <strong>Dar de baja</strong> para inhabilitarlo.</li>
+      </ol>
+      <p><strong>Importante:</strong> un cliente en baja no podrá operar hasta ser reactivado por un administrador.</p>
+
+      <h3>Asignar interfaces a un cliente</h3>
+      <h4>Agregar una nueva interfaz</h4>
+      <ol>
+        <li>Desde la lista de clientes, pulsa <strong>Interfaces</strong> en la fila del cliente.</li>
+        <li>Completa: <em>Site</em> y <em>Depositor</em> del cliente; <em>Sistema que integra</em> (WMS o TMS); <em>Interface</em> del listado; <em>Sección interfaz</em> (Header, Item, LPN, Seq, Ref).</li>
+        <li>Pulsa <strong>Guardar Interface</strong>.</li>
+      </ol>
+      <p><strong>Lista de interfaces del cliente:</strong> muestra sistema, interface, secciones y usuario que las creó.</p>
+
+      <h3>Buenas prácticas</h3>
+      <ul>
+        <li>Revisa periódicamente que los datos de contacto estén actualizados.</li>
+        <li>Da de baja clientes que ya no operan para evitar integraciones innecesarias.</li>
+        <li>Valida que las interfaces habilitadas sean las realmente utilizadas.</li>
+        <li>Usa contraseñas seguras al crear o editar un cliente.</li>
+      </ul>
       <div class="grid grid-cols-3">
         <figure class="figure-card"><img src="img/lista clientes.png" alt="Listado de clientes"><figcaption>Listado de clientes</figcaption></figure>
         <figure class="figure-card"><img src="img/nuevo cliente.png" alt="Alta de cliente"><figcaption>Alta de cliente (formulario)</figcaption></figure>
