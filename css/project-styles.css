@@ -1,0 +1,17 @@
+
+/* Ryder corporate palette overrides */
+:root{
+  --ryder-red:#c8102e;
+  --ryder-gray:#f0eff3;
+  --ryder-dark:#1a202e;
+}
+body{background-color:var(--ryder-gray);}
+aside{
+  background-color:var(--ryder-red);
+  color:#fff;
+}
+aside nav a{color:#fff;padding:4px 0;}
+aside nav a:hover{color:#ffe;}
+a.active{font-weight:700;}
+/* ---- Project styles from existing application (truncated for brevity) ---- */
+/* (Aquí se insertaría la hoja de estilos completa proveniente de tu aplicación) */
