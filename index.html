@@ -32,8 +32,11 @@
     .hamburger .material-icons{font-size:28px}
     .brand{display:flex;align-items:center;margin-left:.5rem}
     .brand img{height:36px}
-    .search-box{flex:0 0 340px;margin-left:auto}
-    .search-box input{width:100%;padding:.5rem .9rem;font-size:.9rem;border:1px solid #d1d5db;border-radius:4px}
+    .search-box{flex:0 0 340px;margin-left:auto;position:relative}
+    .search-box input{width:100%;padding:.5rem 2.2rem .5rem .9rem;font-size:.9rem;border:1px solid #d1d5db;border-radius:4px}
+    .search-box button{position:absolute;right:.35rem;top:50%;transform:translateY(-50%);border:none;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:16px;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+    .search-box button .material-icons{font-size:16px;color:#374151}
+    .search-box button:hover{background:#e5e7eb}
 
     /* ═════════ SIDEBAR ═════════ */
     aside.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--ryder-red);color:#fff;overflow-y:auto;transition:width .25s}
@@ -49,7 +52,7 @@
     aside.sidebar.collapsed .side-title{display:none}
 
     /* ═════════ CONTENIDO ═════════ */
-    main{margin-left:var(--sidebar-w);padding:calc(var(--header-h)+1.8rem) 1.6rem 2.6rem;transition:margin-left .25s}
+    main{margin-left:var(--sidebar-w);padding:calc(var(--header-h)+1.8rem) 1.6rem 2.6rem 2.2rem;transition:margin-left .25s}
     aside.sidebar.collapsed+main{margin-left:60px}
     main h2{margin:2rem 0 1rem;font-size:1.75rem;color:var(--ryder-red)}
     main h3{margin:1.5rem 0 .75rem;font-size:1.25rem;color:#374151}
@@ -423,6 +426,13 @@
       const btnHamburger = document.getElementById('btnHamburger');
       const nav = document.getElementById('navLinks');
       const searchInput = document.getElementById('searchInput');
+      // Botón limpiar búsqueda
+      const clearBtn = document.createElement('button');
+      clearBtn.type = 'button';
+      clearBtn.title = 'Limpiar búsqueda';
+      clearBtn.setAttribute('aria-label','Limpiar búsqueda');
+      clearBtn.innerHTML = '<span class="material-icons">close</span>';
+      document.querySelector('.search-box').appendChild(clearBtn);
       const links = Array.from(nav.querySelectorAll('a'));
       const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
 
@@ -475,7 +485,7 @@
 
       // Búsqueda simple: filtra enlaces y muestra/oculta secciones
       function normalize(t){return (t||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');}
-      searchInput.addEventListener('input', ()=>{
+      function runSearch(){
         const q = normalize(searchInput.value.trim());
         let firstMatchLink = null;
         links.forEach((a,i)=>{
@@ -489,7 +499,9 @@
         if(firstMatchLink){
           firstMatchLink.scrollIntoView({behavior:'smooth', block:'start'});
         }
-      });
+      }
+      searchInput.addEventListener('input', runSearch);
+      clearBtn.addEventListener('click', ()=>{ searchInput.value=''; runSearch(); searchInput.focus(); });
     })();
   </script>
 
