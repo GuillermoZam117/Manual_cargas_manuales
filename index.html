@@ -190,17 +190,61 @@
     <!-- ═══ Usuarios ═══ -->
     <section id="users">
       <h2>Usuarios</h2>
-      <p>Alta, edición y baja de cuentas.</p>
-      <h3>Objetivo</h3>
-      <p>Gestionar accesos y privilegios alineados al principio de mínimo privilegio.</p>
-      <h3>Flujo</h3>
+      <p>El módulo de Usuarios permite administrar cuentas de acceso (crear, editar, activar/desactivar) y mantener la seguridad y control de accesos. Cada usuario autenticado puede gestionar su contraseña desde su menú personal.</p>
+      <h3>Acceso al módulo</h3>
       <ol>
-        <li><strong>Crear</strong>: define nombre, correo corporativo y rol (Administrador, Operador, Consulta).</li>
-        <li><strong>Editar</strong>: restablece contraseña, bloquea/desbloquea usuario, ajusta rol.</li>
-        <li><strong>Desactivar</strong>: aplica baja lógica conservando trazabilidad.</li>
+        <li>Inicia sesión en el sistema.</li>
+        <li>Dirígete al menú principal.</li>
+        <li>Selecciona <strong>Administración → Usuarios</strong> para abrir el listado.</li>
       </ol>
-      <div class="callout"><strong>Seguridad:</strong> usa correos corporativos; evita cuentas compartidas; obliga cambio de contraseña al primer ingreso.</div>
-      <p>Controla el ciclo de vida de cuentas internas y sus privilegios.</p>
+      <h3>Pantalla principal</h3>
+      <ul>
+        <li><strong>Barra de búsqueda</strong>: filtra por nombre de usuario o estado.</li>
+        <li><strong>Lista de usuarios</strong>: muestra Usuario, Nombre completo, Correo, Estado (Activo/Inactivo), Última actualización.</li>
+        <li><strong>Acciones por fila</strong>: Editar, Cambiar estado (Activar/Desactivar).</li>
+        <li><strong>Nuevo Usuario</strong>: botón en la parte superior derecha.</li>
+      </ul>
+      <div class="callout"><strong>Tip:</strong> usa los filtros antes de desplazarte si hay muchos registros.</div>
+      <h3>Creación de un nuevo usuario</h3>
+      <ol>
+        <li>Pulsa <strong>Nuevo Usuario</strong>.</li>
+        <li>Completa: Usuario (único), Nombre y Apellido, Correo (opcional), Contraseña (≥8 con mayúsculas, minúsculas y números), Estado (Activo para habilitar acceso inmediato).</li>
+        <li>Presiona <strong>Guardar</strong>.</li>
+      </ol>
+      <p><strong>Reglas</strong>: el usuario no puede repetirse; la contraseña debe cumplir complejidad; se mostrará confirmación de éxito o errores de validación.</p>
+      <h3>Edición de un usuario existente</h3>
+      <ol>
+        <li>Ubica al usuario en la lista.</li>
+        <li>Pulsa <strong>Editar</strong>.</li>
+        <li>Modifica los campos necesarios (nombre, correo, rol) y presiona <strong>Actualizar</strong>.</li>
+      </ol>
+      <div class="callout"><strong>Consideración:</strong> la <em>contraseña no se cambia</em> en este formulario.</div>
+      <h3>Activar o desactivar un usuario</h3>
+      <ol>
+        <li>En la fila del usuario, pulsa el botón de estado.</li>
+        <li>Confirma para desactivar o activar según corresponda.</li>
+      </ol>
+      <p><strong>Importante:</strong> un usuario desactivado no podrá iniciar sesión hasta su reactivación.</p>
+      <h3>Manejo de cuenta personal — Cambio de contraseña</h3>
+      <ol>
+        <li>Autenticado, abre el <strong>menú personal</strong> (arriba a la derecha).</li>
+        <li>Selecciona <strong>Cambiar contraseña</strong>.</li>
+        <li>Completa: Contraseña actual, Nueva contraseña, Confirmación. Presiona <strong>Guardar</strong>.</li>
+      </ol>
+      <p><strong>Reglas</strong>: no reutilizar últimas contraseñas; cumplir complejidad; si la contraseña actual no es correcta, el cambio se rechazará.</p>
+      <h3>Mensajes y notificaciones</h3>
+      <ul>
+        <li><strong>Éxito</strong>: en verde, confirma el cambio.</li>
+        <li><strong>Error de validación</strong>: en rojo, indica campos faltantes o reglas incumplidas.</li>
+        <li><strong>Confirmación</strong>: antes de activar/desactivar usuarios.</li>
+      </ul>
+      <h3>Buenas prácticas</h3>
+      <ul>
+        <li>Mantén activos solo los usuarios que realmente utilizan el sistema.</li>
+        <li>Usa contraseñas seguras y cámbialas periódicamente.</li>
+        <li>No compartas credenciales; usa correos corporativos.</li>
+        <li>Mantén actualizados los datos de contacto.</li>
+      </ul>
       <div class="grid grid-cols-3">
         <figure class="figure-card"><img src="img/lista usuarios.png" alt="Listado de usuarios"><figcaption>Listado de usuarios</figcaption></figure>
         <figure class="figure-card"><img src="img/crear usuario.png" alt="Crear usuario"><figcaption>Crear usuario</figcaption></figure>
