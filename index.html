@@ -46,6 +46,7 @@
     .icon{display:inline-flex;min-width:24px;justify-content:center}
     .icon .material-icons-outlined{font-size:20px;color:#fff}
     aside.sidebar.collapsed span.label{display:none}
+    aside.sidebar.collapsed .side-title{display:none}
 
     /* ═════════ CONTENIDO ═════════ */
     main{margin-left:var(--sidebar-w);padding:calc(var(--header-h)+1.8rem) 1.6rem 2.6rem;transition:margin-left .25s}
@@ -97,6 +98,9 @@
       <a href="#validation"><span class="icon"><span class="material-icons-outlined">task_alt</span></span><span class="label">Validaciones</span></a>
       <a href="#integration"><span class="icon"><span class="material-icons-outlined">hub</span></span><span class="label">Integración/API</span></a>
       <a href="#admin"><span class="icon"><span class="material-icons-outlined">settings</span></span><span class="label">Administración</span></a>
+      <a href="#glossary"><span class="icon"><span class="material-icons-outlined">menu_book</span></span><span class="label">Glosario</span></a>
+      <a href="#data-dictionary"><span class="icon"><span class="material-icons-outlined">table_view</span></span><span class="label">Diccionario de datos</span></a>
+      <a href="#support"><span class="icon"><span class="material-icons-outlined">support_agent</span></span><span class="label">Soporte</span></a>
       <a href="#troubleshooting"><span class="icon"><span class="material-icons-outlined">bug_report</span></span><span class="label">Solución de problemas</span></a>
       <a href="#faq"><span class="icon"><span class="material-icons-outlined">help</span></span><span class="label">FAQ</span></a>
     </nav>
@@ -151,13 +155,16 @@
     <section id="clients">
       <h2>Clientes</h2>
       <p>Catálogo con búsqueda, alta, edición, asignación de interfaces y baja lógica.</p>
+      <h3>Objetivo</h3>
+      <p>Administrar el maestro de clientes asegurando consistencia de datos para su uso en interfaces y procesos de carga.</p>
       <h3>Flujo</h3>
       <ol>
-        <li>Crear cliente: completa datos mínimos obligatorios.</li>
-        <li>Asignar interfaces: vincula las interfaces válidas para el cliente.</li>
-        <li>Editar datos: puedes actualizar razón social, contacto, etc.</li>
-        <li>Baja lógica: desactiva al cliente manteniendo su histórico.</li>
+        <li><strong>Crear cliente</strong>: registra razón social, RFC, contactos y estatus. Verifica duplicados por RFC.</li>
+        <li><strong>Asignar interfaces</strong>: relaciona las interfaces habilitadas (EDI/WS) y parámetros por cliente.</li>
+        <li><strong>Editar datos</strong>: actualiza información operativa (direcciones, SLA, contacto).</li>
+        <li><strong>Baja lógica</strong>: desactiva al cliente para bloquear nuevas cargas sin perder histórico.</li>
       </ol>
+      <div class="callout"><strong>Buenas prácticas:</strong> valida RFC y contactos antes de crear; documenta cambios relevantes en el campo notas.</div>
       <p>Desde aquí gestionas la información maestra de clientes y sus interfaces.</p>
       <div class="grid grid-cols-3">
         <figure class="figure-card"><img src="img/5599a85d-7a35-45f4-9ad8-65848709fb75.png" alt="Lista de clientes"><figcaption>Página principal</figcaption></figure>
@@ -173,12 +180,15 @@
     <section id="users">
       <h2>Usuarios</h2>
       <p>Alta, edición y baja de cuentas.</p>
+      <h3>Objetivo</h3>
+      <p>Gestionar accesos y privilegios alineados al principio de mínimo privilegio.</p>
       <h3>Flujo</h3>
       <ol>
-        <li>Crear: define nombre, correo y rol (Administrador, Operador, Consulta).</li>
-        <li>Editar: restablece contraseña o cambia rol.</li>
-        <li>Desactivar: baja lógica de la cuenta sin borrar histórico.</li>
+        <li><strong>Crear</strong>: define nombre, correo corporativo y rol (Administrador, Operador, Consulta).</li>
+        <li><strong>Editar</strong>: restablece contraseña, bloquea/desbloquea usuario, ajusta rol.</li>
+        <li><strong>Desactivar</strong>: aplica baja lógica conservando trazabilidad.</li>
       </ol>
+      <div class="callout"><strong>Seguridad:</strong> usa correos corporativos; evita cuentas compartidas; obliga cambio de contraseña al primer ingreso.</div>
       <p>Controla el ciclo de vida de cuentas internas y sus privilegios.</p>
       <div class="grid grid-cols-3">
         <figure class="figure-card"><img src="img/bdcedbb3-76da-4b0f-a40b-c3ba914c027a.png" alt="Lista de usuarios"><figcaption>Página principal</figcaption></figure>
@@ -234,9 +244,9 @@
       </ul>
       <h3>Flujo</h3>
       <ol>
-        <li>Selecciona archivo.</li>
-        <li>Vista previa: corrige filas marcadas con error.</li>
-        <li>Confirmación: el sistema procesa y muestra resumen.</li>
+        <li><strong>Selecciona archivo</strong>: adjunta el CSV/XLSX de acuerdo con la plantilla vigente.</li>
+        <li><strong>Vista previa</strong>: revisa registros, corrige filas con errores y vuelve a subir si es necesario.</li>
+        <li><strong>Confirmación</strong>: ejecuta la carga; al finalizar, consulta el resumen y los folios de proceso.</li>
       </ol>
       <h3>Validaciones clave</h3>
       <ul>
@@ -244,6 +254,15 @@
         <li>Referenciales: cliente/usuario/ interfaz existentes y activos.</li>
         <li>Reglas de negocio: rangos, formatos, duplicados.</li>
       </ul>
+      <h3>Métricas y resultados</h3>
+      <table>
+        <thead><tr><th>Métrica</th><th>Descripción</th></tr></thead>
+        <tbody>
+          <tr><td>Total registros</td><td>Cantidad de filas leídas desde el archivo.</td></tr>
+          <tr><td>Errores</td><td>Número de filas rechazadas por validación.</td></tr>
+          <tr><td>Aceptados</td><td>Número de filas que avanzan a procesamiento.</td></tr>
+        </tbody>
+      </table>
       <div class="grid grid-cols-3">
         <figure class="figure-card"><img src="img/76a847c1-2470-4432-9593-994e509a3c03.png" alt="Selección de archivo"><figcaption>Selección de archivo</figcaption></figure>
         <figure class="figure-card"><img src="img/9a3007e3-7894-4631-af25-25926497a953.png" alt="Validación previa"><figcaption>Validación previa</figcaption></figure>
@@ -255,6 +274,13 @@
     <section id="validation">
       <h2>Validaciones</h2>
       <p>Se aplican reglas de negocio y validaciones de formato para evitar inconsistencias.</p>
+      <h3>Tipos de validación</h3>
+      <ul>
+        <li><strong>Estructura</strong>: columnas, encabezados y tipos.</li>
+        <li><strong>Dominio</strong>: catálogos y valores permitidos.</li>
+        <li><strong>Integridad</strong>: claves y relaciones referenciales.</li>
+        <li><strong>Negocio</strong>: reglas específicas por cliente y operación.</li>
+      </ul>
       <h3>Estados de registro</h3>
       <table>
         <thead><tr><th>Estado</th><th>Descripción</th><th>Acción sugerida</th></tr></thead>
@@ -264,6 +290,7 @@
           <tr><td>Procesado</td><td>Cargado correctamente.</td><td>Ninguna.</td></tr>
         </tbody>
       </table>
+      <div class="callout"><strong>Consejo:</strong> prioriza la corrección de errores de estructura; los de negocio suelen ser contextuales y requerirán revisión con el área funcional.</div>
       <div class="grid grid-cols-3">
         <figure class="figure-card"><img src="img/df6571da-6951-478f-8708-85ab96caf9d8.png" alt="Errores de estructura"><figcaption>Errores de estructura</figcaption></figure>
         <figure class="figure-card"><img src="img/5a44c315-6371-4d21-b7a1-1460a02f706a.png" alt="Reglas de negocio"><figcaption>Reglas de negocio</figcaption></figure>
@@ -283,6 +310,13 @@
           <tr><td>Errores</td><td>Devuelven códigos HTTP y mensajes claros.</td></tr>
         </tbody>
       </table>
+      <h3>Ejemplo de flujo técnico</h3>
+      <ol>
+        <li>Login del usuario y emisión de token de sesión.</li>
+        <li>Subida de archivo y validación inicial.</li>
+        <li>Procesamiento y almacenamiento transaccional.</li>
+        <li>Respuesta con métricas y folios de seguimiento.</li>
+      </ol>
     </section>
 
     <!-- ═══ Administración ═══ -->
@@ -294,6 +328,12 @@
         <li>Tamaño máximo de archivo y tipos permitidos.</li>
         <li>Horarios de ventana de procesamiento.</li>
         <li>Política de contraseñas y caducidad.</li>
+      </ul>
+      <h3>Tareas frecuentes</h3>
+      <ul>
+        <li>Alta/baja de interfaces por cliente.</li>
+        <li>Gestión de parámetros por entorno (QA/Prod).</li>
+        <li>Revisión de bitácoras y auditoría.</li>
       </ul>
       <div class="grid grid-cols-3">
         <figure class="figure-card"><img src="img/c76ec68b-9000-471a-b91a-6d7b123166cd.png" alt="Parámetros"><figcaption>Parámetros</figcaption></figure>
@@ -316,6 +356,51 @@
         <li>Valida el archivo con la plantilla antes de subirlo.</li>
         <li>Sube lotes pequeños para detectar errores más rápido.</li>
         <li>Guarda evidencias (capturas) para soporte.</li>
+      </ul>
+    </section>
+
+    <!-- ═══ Glosario ═══ -->
+    <section id="glossary">
+      <h2>Glosario</h2>
+      <table>
+        <thead><tr><th>Término</th><th>Definición</th></tr></thead>
+        <tbody>
+          <tr><td>Interface</td><td>Conjunto de reglas para intercambio de datos entre sistemas.</td></tr>
+          <tr><td>Validación</td><td>Conjunto de comprobaciones de estructura y negocio.</td></tr>
+          <tr><td>Baja lógica</td><td>Desactivación sin eliminación física de datos.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ═══ Diccionario de datos (plantillas) ═══ -->
+    <section id="data-dictionary">
+      <h2>Diccionario de Datos (Plantillas)</h2>
+      <p>Campos comunes esperados en las plantillas de carga.</p>
+      <table>
+        <thead><tr><th>Campo</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+        <tbody>
+          <tr><td>ClienteId</td><td>Entero</td><td>Sí</td><td>Identificador del cliente en el sistema.</td></tr>
+          <tr><td>Fecha</td><td>Fecha ISO</td><td>Sí</td><td>Fecha de la operación (UTC).</td></tr>
+          <tr><td>Referencia</td><td>Texto</td><td>No</td><td>Referencia externa de negocio.</td></tr>
+          <tr><td>Monto</td><td>Decimal</td><td>No</td><td>Valor numérico con punto decimal.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">Este diccionario es ilustrativo. Consulta la plantilla específica de cada proceso.</div>
+    </section>
+
+    <!-- ═══ Soporte y escalamiento ═══ -->
+    <section id="support">
+      <h2>Soporte y Escalamiento</h2>
+      <h3>Antes de escalar</h3>
+      <ul>
+        <li>Reproduce el error y captura evidencia (pantallas y archivo de ejemplo).</li>
+        <li>Anota fecha/hora, usuario, módulo y pasos previos.</li>
+      </ul>
+      <h3>Canales</h3>
+      <ul>
+        <li>Mesa de Ayuda: crea ticket con prioridad y evidencia.</li>
+        <li>Soporte funcional: dudas de negocio o plantillas.</li>
+        <li>Soporte técnico: fallas, caídas o rendimiento.</li>
       </ul>
     </section>
 
